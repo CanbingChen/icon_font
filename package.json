@@ -1,0 +1,55 @@
+{
+  "name": "info_module",
+  "version": "1.0.0",
+  "description": "into_module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node server.js",
+    "hot": "webpack --config webpack.config.js --display-error-details --progress --colors --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xiangming25/info_module.git"
+  },
+  "author": "xiangming",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xiangming25/info_module/issues"
+  },
+  "homepage": "https://github.com/xiangming25/info_module#readme",
+  "dependencies": {
+    "autoprefixer-loader": "^3.2.0",
+    "babel-core": "^6.21.0",
+    "babel-loader": "^6.2.10",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0",
+    "body-parser": "^1.16.0",
+    "css-loader": "^0.26.1",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "file-loader": "^0.9.0",
+    "html-webpack-plugin": "^2.26.0",
+    "jsx-loader": "^0.13.2",
+    "less": "^2.7.2",
+    "less-loader": "^2.2.3",
+    "react-dom": "^15.4.2",
+    "react-hot-loader": "^1.3.1",
+    "react-redux": "^4.4.5",
+    "react-router": "^2.3.0",
+    "react-slick": "^0.14.5",
+    "redux": "^3.5.2",
+    "redux-thunk": "^2.1.0",
+    "slick-carousel": "^1.6.0",
+    "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.14.0",
+    "webpack-dev-server": "^1.16.2",
+    "immutable": "^3.8.1",
+    "pure-render-decorator": "^1.2.1",
+    "react": "^15.4.2",
+    "react-flexible": "^1.0.7"
+  },
+  "devDependencies": {
+    "axios": "^0.15.3"
+  }
+}

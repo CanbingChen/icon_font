@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import {Link} from 'react-router';
-import {Tool} from '../Config/Tool';
+import Particles from 'react-particles-js';
+import {Tool} from '../unit/Tool';
 import template from './common/template';
 
 /**
@@ -38,8 +39,18 @@ class test extends Component{
 	}
 	render(){
 		return(
-			<div className="index">
-				这里个是测试页
+			<div className="">
+				<Particles params={{
+				   particles: {
+					   line_linked: {
+						   shadow: {
+							   enable: true,
+							   color: "#000000",
+							   blur: 5
+						   }
+					   }
+				   }
+			   }}/>
 				<span onClick={this.clickHandle.bind(this)}>
 					点击按钮事件
 				</span>

@@ -1,0 +1,30 @@
+.index{
+	min-height: 100vh;
+	position: relative;
+	background-color: #000000;
+	text-align: center;
+	background-size: cover;
+	background-image: url('../../images/bg.jpg');
+	background-repeat:no-repeat;
+	background-attachment:fixed
+}
+.index-nav {
+	width: 70vw;
+	line-height: 70px;
+	ul li{
+		margin-left: 20px;
+		font-size: 25px;
+		display: inline-block;
+		a{
+			color:rgba(255,255,255,.5);
+		}
+		&>.active{
+			color: #fff;
+		}
+	}
+}
+.index-content{
+	background-color: rgba(255,255,255,.5);
+	margin: 0 auto;
+	width: 70vw;
+}

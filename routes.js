@@ -9,6 +9,7 @@ router.get('/signin', indexView);
 router.get('/userPortrait_search', indexView);
 router.get('/userPortrait_detail', indexView);
 router.post('/api/send_emil/', function * (next) {
+    var arr = fs.readdirSync('./client/images',{encoding:'utf8'});
     var transporter = nodemailer.createTransport({
         service: 'qq',
         port: 465, // SMTP 端口

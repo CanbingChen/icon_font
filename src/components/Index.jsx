@@ -66,12 +66,17 @@ class Index extends Component{
 	}
 
 	render(){
+		var arr = [];
+		['iconfont-jingxihuaxue.svg','wxb标王.svg'].forEach(function(icon){
+			arr.push(<img src={require('../images/'+icon)}/>);
+		});
 		return(
 			<div className="index">
 				<Nav/>
 				<span onClick={this.clickHandle.bind(this)}>
 					发送邮件
 				</span>
+				{arr}
 				<Content ccb="1234569"/>
 				<Particles params={{
 				   particles: {

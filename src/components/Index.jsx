@@ -13,7 +13,6 @@ class Content extends Component{
 	componentWillMount(){
 		var that = this;
 		Tool.Fetch('https://route.showapi.com/213-4?showapi_appid=25158&topid=5&showapi_sign=c0d685445898438f8c12ee8e93c2ee74','GET','').then(function(response){
-			console.log(response);
 			// this.state.pagebean = response.showapi_res_body.pagebean;
 			that.setState({
 				data : response.showapi_res_body.pagebean
@@ -57,7 +56,11 @@ class Index extends Component{
 			title : '首页'
 		};
 	}
-
+	clickHandle(){
+		Tool.Fetch('/api/send_emil/','POST','').then(function(response){
+			console.log(response);
+		});
+	}
 	componentWillUpdate(nextProps,nextState){
 		this.state.title = '首页';
 	}
@@ -66,6 +69,9 @@ class Index extends Component{
 		return(
 			<div className="index">
 				<Nav/>
+				<span onClick={this.clickHandle.bind(this)}>
+					发送邮件
+				</span>
 				<Content ccb="1234569"/>
 				<Particles params={{
 				   particles: {
@@ -86,7 +92,8 @@ class Index extends Component{
 				   widthL:'100%',
 				   height: "100%"
 			   }}/>
-		   	<span>{this.state.title}</span>
+		   <input type="file"/>
+			//   	<span>{this.state.title}</span>
 			</div>
 		)
 	}

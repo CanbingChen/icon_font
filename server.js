@@ -3,9 +3,9 @@ var webpackDevServer = require('webpack-dev-server');
 var config = require('./webpack.config');
 
 var proxy = [{
-	path : '/api/*',
-	target : 'http://localhost:3333',
-	host:'localhost:3333'
+	path : '/api/*/',
+	target : 'http://localhost:8888',
+	host:'localhost:8888'
 	// path: '/*/*', //必须得有一个文件地址，如果顶层文件夹名字不同，则用/*代替
 	// target: 'http://dev.fe.ptdev.cn',
 	// host: 'dev.fe.ptdev.cn',

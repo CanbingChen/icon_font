@@ -5,35 +5,58 @@ import {Link} from 'react-router';
 import template from './common/template';
 import Tool from '../unit/Tool';
 
-class Content extends Component{
+class Footer extends Component{
 	constructor(props){
 		super(props);
-		this.state = {data : {songlist:[]}};
+		this.state = {files : []};
 	}
 	componentWillMount(){
-		var that = this;
-		Tool.Fetch('https://route.showapi.com/213-4?showapi_appid=25158&topid=5&showapi_sign=c0d685445898438f8c12ee8e93c2ee74','GET','').then(function(response){
-			// this.state.pagebean = response.showapi_res_body.pagebean;
-			that.setState({
-				data : response.showapi_res_body.pagebean
-			});
-			console.log(that.state);
+
+	}
+	postDownload(){
+		Tool.Fetch('/api/download_all/','GET','').then(function(response){
+			
 		});
 	}
 	componentDidMount() {
 
 	}
 	render(){
-		var items = [];
-		this.state.data.songlist.forEach(function(item){
-			items.push(<div className="item" key={item.songid}>
-			<img src={item.albumpic_small}/>
-			{item.singername}
-			</div>);
+		return (
+			<div className="index-footer">
+				<button onClick={this.postDownload.bind(this)}>我是底部下载按钮</button>
+			</div>
+		)
+	}
+}
+class Content extends Component{
+	constructor(props){
+		super(props);
+		this.state = {files : []};
+	}
+	componentWillMount(){
+		var that = this;
+		Tool.Fetch('/api/send_emil/','POST','').then(function(response){
+			var state = that.state;
+			state.files = response.data.files;
+			that.setState(state);
+		});
+	}
+	componentDidMount() {
+
+	}
+	render(){
+		var arr = [];
+		this.state.files.forEach(function(icon){
+			arr.push(
+				<div className="svg-item">
+					<img src={require('../svgs/'+icon)}/>
+					<p>{icon}</p>
+				</div>);
 		});
 		return (
 			<div className="index-content">
-				{items}
+				{arr}
 			</div>
 		)
 	}
@@ -53,38 +76,30 @@ class Index extends Component{
 				slidesToScroll : 1,
 				autoplay : true
 			},
-			title : '首页'
+			title : '首页',
+
 		};
 	}
 	clickHandle(){
-		Tool.Fetch('/api/send_emil/','POST','').then(function(response){
-			console.log(response);
-		});
+		var that = this;
+
 	}
 	componentWillUpdate(nextProps,nextState){
 		this.state.title = '首页';
 	}
 
 	render(){
-		var arr = [];
-		['iconfont-jingxihuaxue.svg','wxb标王.svg'].forEach(function(icon){
-			arr.push(<img src={require('../images/'+icon)}/>);
-		});
 		return(
 			<div className="index">
 				<Nav/>
-				<span onClick={this.clickHandle.bind(this)}>
-					发送邮件
-				</span>
-				{arr}
-				<Content ccb="1234569"/>
+				<Content/>
 				<Particles params={{
 				   particles: {
 					   line_linked: {
 						   shadow: {
 							   enable: true,
 							   color: "#000000",
-							   blur: 5
+							   blur: 2
 						   }
 					   }
 				   }
@@ -94,12 +109,11 @@ class Index extends Component{
 				   top:0,
 				   zIndex:-1,
 				   left:0,
-				   widthL:'100%',
-				   height: "100%"
+				   width:'100%',
+				   height: "100%",
 			   }}/>
-		   <input type="file"/>
-			//   	<span>{this.state.title}</span>
-			</div>
+		   <Footer/>
+	   </div>
 		)
 	}
 }

@@ -10,18 +10,42 @@ router.get('/signin', indexView);
 router.get('/userPortrait_search', indexView);
 router.get('/userPortrait_detail', indexView);
 router.get('/api/download_all/',function*(next){
+    // var  p= '1.zip';
+    // 	var filename = '1.zip';
+    // 	console.log(filename);
+    // 	var filepath= path.join(__dirname+'/src/images/',p);
+    // 	console.log(filepath);
+    // 	var stats = fs.statSync(filepath);
+    // 	if(stats.isFile()){
+    // 		res.set({
+    // 			'Content-Type': 'application/octet-stream',
+    // 			'Content-Disposition': 'attachment; filename='+filename,
+    // 			'Content-Length': stats.size
+    // 		});
+    // 		this.body = fs.createReadStream(filepath).pipe(res);
+    // 	} else {
+    // 		res.end(404);
+    // 	}
+    // 	this.set('Content-disposition','attachment;filename='+filename);
+    // 	//var output =fs.createReadStream(filepath);
+    // 	//console.log(output);
+    // 	//output.pipe(this.res);
+    // 	var info =yield readData(filepath);
+    // 	console.log(info);
+    // 	this.body=info;
     var  p= '1.zip';
         var filename = '1.zip';
         console.log(filename);
         var filepath= path.join(__dirname+'/src/images/',p);
-        console.log(filepath);
+        var stats = fs.statSync(filepath);
         this.set('Content-disposition','attachment;filename='+filename);
+        this.set('Content-Type','application/octet-stream');
         //var output =fs.createReadStream(filepath);
         //console.log(output);
         //output.pipe(this.res);
-        var info =yield readData(filepath);
-        console.log(info);
-        this.body=info;
+        // var info =yield readData(filepath);
+        // console.log(info);
+        this.body=fs.createReadStream(filepath);
 });
 router.post('/api/send_emil/', function * (next) {
     var arr = fs.readdirSync('./src/svgs',{encoding:'utf8'});

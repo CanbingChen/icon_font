@@ -3,11 +3,24 @@
 	position: relative;
 	text-align: center;
 }
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  overflow: hidden;
+}
 .index-nav {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 20;
 	line-height: 70px;
 	background-color: #090723;
 	// background-image: url('../../images/bg.jpg');
-	margin: 0 auto;
 	ul li{
 		margin-left: 20px;
 		font-size: 25px;
@@ -21,10 +34,14 @@
 	}
 }
 .index-content{
-	width: 70vw;
+	position: absolute;
+	top: 74px;
+	left: 0;
+	right: 0;
+	width: 74vw;
 	background-color: #fff;
 	margin: 0 auto;
-	min-height: 80vh;
+	z-index: 20;
 	overflow: hidden;
 	padding: 20px 46px;
 }

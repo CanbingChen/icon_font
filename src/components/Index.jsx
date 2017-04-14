@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import Particles from 'react-particles-js';
 import { DataLoad, Nav } from './common/common_item';
+import  Background from './background';
 import {Link} from 'react-router';
 import template from './common/template';
 import Tool from '../unit/Tool';
@@ -15,7 +16,7 @@ class Footer extends Component{
 	}
 	postDownload(){
 		Tool.Fetch('/api/download_all/','GET','').then(function(response){
-			
+
 		});
 	}
 	componentDidMount() {
@@ -93,25 +94,8 @@ class Index extends Component{
 			<div className="index">
 				<Nav/>
 				<Content/>
-				<Particles params={{
-				   particles: {
-					   line_linked: {
-						   shadow: {
-							   enable: true,
-							   color: "#000000",
-							   blur: 2
-						   }
-					   }
-				   }
-			   }}
-			   style={{
-				   position:"fixed",
-				   top:0,
-				   zIndex:-1,
-				   left:0,
-				   width:'100%',
-				   height: "100%",
-			   }}/>
+				<Background/>
+			
 		   <Footer/>
 	   </div>
 		)

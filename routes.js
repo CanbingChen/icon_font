@@ -4,7 +4,7 @@ const readData = require('./rea_Ddata.js');
 const nodemailer = require('nodemailer');
 const path = require('path');
 const router = require('koa-router')();
-
+var parse = require('co-busboy');
 router.get('/', indexView);
 router.get('/signin', indexView);
 router.get('/userPortrait_search', indexView);
@@ -75,6 +75,27 @@ router.post('/api/send_emil/', function * (next) {
     //     }
     //     console.log('Message sent: ' + info.response);
     // });
+});
+router.post('/api/upload/',function*(){
+    var _this = this;
+    var parts = parse(this);
+    var part;
+
+    var count = 0;
+    console.log('start',+new Date());
+    while(part = yield parts){
+        var stream = fs.createWriteStream(path.resolve(__dirname,'./src/svgs') + '/' + part.filename);
+        part.pipe(stream,{end: false});
+        part.on('end',function(){
+            count++;
+            if(count == parts.length){
+                _this.body = {
+                    "status" : 200
+                }
+            }
+            console.log('uploading %s -> %s', part.filename, stream.path);
+        });
+    }
 });
 var readFileThunk = function(src) {
     return new Promise(function(resolve, reject) {

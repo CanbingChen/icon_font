@@ -15,17 +15,22 @@ class Footer extends Component{
 
 	}
 	postDownload(){
-		Tool.Fetch('/api/download_all/','GET','').then(function(response){
-
-		});
+		window.open('/api/download_all/');
+		// Tool.Fetch('/api/download_all/','GET','').then(function(response){
+		//
+		// });
 	}
+
 	componentDidMount() {
 
 	}
 	render(){
+		var options={
+        baseUrl:'/api/upload/',
+    }
 		return (
 			<div className="index-footer">
-				<button onClick={this.postDownload.bind(this)}>我是底部下载按钮</button>
+				<button className="btn btn-primary btn-large" onClick={this.postDownload.bind(this)}>我是底部下载按钮</button>
 			</div>
 		)
 	}
@@ -37,6 +42,7 @@ class Content extends Component{
 	}
 	componentWillMount(){
 		var that = this;
+
 		Tool.Fetch('/api/send_emil/','POST','').then(function(response){
 			var state = that.state;
 			state.files = response.data.files;
@@ -57,8 +63,10 @@ class Content extends Component{
 		});
 		return (
 			<div className="index-content">
-				{arr}
+				<div className="icons-block">{arr}</div>
+				<Footer/>
 			</div>
+
 		)
 	}
 }
@@ -95,8 +103,7 @@ class Index extends Component{
 				<Nav/>
 				<Content/>
 				<Background/>
-			
-		   <Footer/>
+
 	   </div>
 		)
 	}

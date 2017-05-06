@@ -1,11 +1,86 @@
 import React, {Component, PropTypes} from 'react';
 import {Link} from 'react-router';
 import Particles from 'react-particles-js';
-import {Tool} from '../unit/Tool';
+import { DataLoad, Nav } from './common/common_item';
+import  Background from './background';
+import Tool from '../unit/Tool';
 import template from './common/template';
 
 /**
- * 首页
+ * 上传模块显示页
+ */
+class Upload extends Component{
+	constructor(props,context){
+		super(props,context);
+		this.state = {icons : []};
+	}
+	componentWillMount(){
+
+	}
+	componentDidMount() {
+
+	}
+	uploadIcons(event){
+
+		var that = this;
+		let target = event.target
+		let files = target.files;
+		var fileObj = new FormData();
+		for(var i = 0,len = files.length;i < len;i++){
+		}
+		for(var i=0,len=files.length;i<len;i++){
+			fileObj.append(i,files[i]);
+			var reader = new FileReader();
+
+      reader.readAsDataURL(files[i]);
+      reader.onload = function(e) {
+          that.setState({icons : that.state.icons.concat([this.result])});
+      }
+			// var formData = new FormData();
+			// formData.append('files',files[0]);
+			// Tool.Fetch('/api/upload/','POST',formData).then();
+		}
+		Tool.Fetch('/api/upload/','POST',fileObj).then();
+	}
+	render()
+	{
+		var arr = [];
+		this.state.icons.forEach(function(icon){
+			arr.push(
+				<div className="svg-item">
+					<img src={icon} />
+				</div>);
+		});
+		var result = arr;
+		if(arr.length === 0){
+			result = <div className="none-icon-block">
+				请上传需要上传图标
+			</div>;
+		}
+		return(
+			<div className="upload-block">
+					<h2>
+					<span>
+						选中图标
+					</span>
+					<label>
+					<span className="select-button"><i className="icon-search"></i>选择图标</span>
+					<input type="file" multiple onChange={this.uploadIcons.bind(this)}/>
+					</label>
+					</h2>
+					<div>
+					</div>
+					<div className="upload-content">
+						{result}
+					</div>
+			</div>
+		)
+	}
+}
+
+
+/**
+ * 上传页面
  */
 class test extends Component{
 	constructor(props,context){
@@ -26,7 +101,6 @@ class test extends Component{
 		this.state.title = '首页';
 	}
 	clickHandle(e){
-		console.log(e);
 		Tool.Fetch('/test','POST').then(function(response){
 			console.log(response);
 		});
@@ -40,20 +114,11 @@ class test extends Component{
 	render(){
 		return(
 			<div className="">
-				<Particles params={{
-				   particles: {
-					   line_linked: {
-						   shadow: {
-							   enable: true,
-							   color: "#000000",
-							   blur: 5
-						   }
-					   }
-				   }
-			   }}/>
-				<span onClick={this.clickHandle.bind(this)}>
-					点击按钮事件
-				</span>
+				<Nav/>
+				<div className="index-content">
+					<Upload/>
+				</div>
+				<Background/>
 			</div>
 		)
 	}

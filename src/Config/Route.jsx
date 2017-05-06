@@ -20,6 +20,7 @@ const RouteConfig = (
     <Router history = {history}>
         <Route path='/' component={Roots}>
             <IndexRoute component={Index} />
+             <Route path="all" component={Index} />
              <Route path="test" component={test} />
         </Route>
     </Router>

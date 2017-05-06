@@ -63,13 +63,13 @@ export class Nav extends Component{
 			<nav className="index-nav">
                 <ul >
                     <li className="nav-item">
-						<Link to="/" activeClassName="active">
-							<i className="iconfont icon-shouye"></i>全部图标
+						<Link to="/all"  activeClassName="active">
+							<i className="icon-index"></i>全部图标
 						</Link>
                     </li>
                     <li className="nav-item" >
 						<Link to="/test" activeClassName="active">
-							<i className="iconfont icon-shouye"></i>生成图标
+							<i className="icon-upload"></i>生成图标
 						</Link>
 
                     </li>

@@ -2,6 +2,12 @@
 	min-height: 100vh;
 	position: relative;
 	text-align: center;
+	.download-all-button{
+		display: inline-block;
+		line-height: 20px;
+		background-color: #1ef48a;
+		border: none;
+	}
 }
 .background {
   position: fixed;
@@ -14,6 +20,7 @@
 }
 .index-nav {
 	position: absolute;
+	text-align: center;
 	top: 0;
 	left: 0;
 	right: 0;
@@ -25,8 +32,12 @@
 		margin-left: 20px;
 		font-size: 25px;
 		display: inline-block;
+		margin-right: 20px;
 		a{
 			color:rgba(255,255,255,.5);
+		}
+		i{
+			margin-right: 10px;
 		}
 		&>.active{
 			color: #fff;
@@ -35,6 +46,8 @@
 }
 .index-content{
 	position: absolute;
+	padding-top: 30px;
+	min-height: 70vh;
 	top: 74px;
 	left: 0;
 	right: 0;
@@ -44,6 +57,10 @@
 	z-index: 20;
 	overflow: hidden;
 	padding: 20px 46px;
+	.icons-block{
+		overflow: hidden;
+		margin-bottom: 120px;
+	}
 }
 .svg-item{
 	float: left;
@@ -59,4 +76,8 @@
 .svg-item:hover{
 	box-shadow: 1px 1px 10px 2px #CCC;
     border-color: red;
+}
+.upload-content{
+	overflow: hidden;
+	padding-top: 30px;
 }

@@ -20,7 +20,14 @@ class Footer extends Component{
 		//
 		// });
 	}
-
+	upload(event){
+		var files = event.target.files;
+		var file = new FormData();
+		for(var i = 0,len = files.length;i < len;i++){
+			file.append(i,files[i]);
+		}
+		Tool.Fetch('/api/upload/','POST',file).then();
+	}
 	componentDidMount() {
 
 	}
@@ -30,7 +37,9 @@ class Footer extends Component{
     }
 		return (
 			<div className="index-footer">
-				<button className="btn btn-primary btn-large" onClick={this.postDownload.bind(this)}>我是底部下载按钮</button>
+				// <button className="btn btn-primary btn-large" onClick={this.postDownload.bind(this)}>我是底部下载按钮</button>
+				<button onClick={this.postDownload.bind(this)}>我是底部下载按钮</button>
+				<input onChange={this.upload.bind(this)} type="file" multiple/>
 			</div>
 		)
 	}
@@ -64,6 +73,7 @@ class Content extends Component{
 		return (
 			<div className="index-content">
 				<div className="icons-block">{arr}</div>
+				// {arr}
 				<Footer/>
 			</div>
 

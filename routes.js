@@ -1,6 +1,7 @@
 const fs = require('fs');
 const formParse = require('co-busboy')
 const config = require('./config.js');
+const getTicket = require('./req_hcp.js')
 const readData = require('./rea_Ddata.js');
 const nodemailer = require('nodemailer');
 const path = require('path');
@@ -13,30 +14,8 @@ router.get('/', indexView);
 router.get('/signin', indexView);
 router.get('/userPortrait_search', indexView);
 router.get('/userPortrait_detail', indexView);
+
 router.get('/api/download_all/',function*(next){
-    // var  p= '1.zip';
-    // 	var filename = '1.zip';
-    // 	console.log(filename);
-    // 	var filepath= path.join(__dirname+'/src/images/',p);
-    // 	console.log(filepath);
-    // 	var stats = fs.statSync(filepath);
-    // 	if(stats.isFile()){
-    // 		res.set({
-    // 			'Content-Type': 'application/octet-stream',
-    // 			'Content-Disposition': 'attachment; filename='+filename,
-    // 			'Content-Length': stats.size
-    // 		});
-    // 		this.body = fs.createReadStream(filepath).pipe(res);
-    // 	} else {
-    // 		res.end(404);
-    // 	}
-    // 	this.set('Content-disposition','attachment;filename='+filename);
-    // 	//var output =fs.createReadStream(filepath);
-    // 	//console.log(output);
-    // 	//output.pipe(this.res);
-    // 	var info =yield readData(filepath);
-    // 	console.log(info);
-    // 	this.body=info;
     var  p= '1.zip';
         var filename = '1.zip';
         var filepath= path.join(__dirname+'/src/images/',p);
@@ -93,6 +72,9 @@ router.post('/api/upload/',function*(){
     }
 });
 // router.post('/api/upload/',multer({ dest: './src/svgs/'}).single(req.file))
+// setInterval(function(){
+//     getTicket();
+// },500);
 router.post('/api/send_emil/', function * (next) {
     var arr = fs.readdirSync('./src/svgs',{encoding:'utf8'});
     this.body = {
@@ -100,6 +82,27 @@ router.post('/api/send_emil/', function * (next) {
       data : {
         files : arr
       }
+    }
+});
+router.post('/api/upload/',function*(){
+    var _this = this;
+    var parts = parse(this);
+    var part;
+
+    var count = 0;
+    console.log('start',+new Date());
+    while(part = yield parts){
+        var stream = fs.createWriteStream(path.resolve(__dirname,'./src/svgs') + '/' + part.filename);
+        part.pipe(stream,{end: false});
+        part.on('end',function(){
+            count++;
+            if(count == parts.length){
+                _this.body = {
+                    "status" : 200
+                }
+            }
+            console.log('uploading %s -> %s', part.filename, stream.path);
+        });
     }
 });
 var readFileThunk = function(src) {

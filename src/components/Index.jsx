@@ -37,9 +37,7 @@ class Footer extends Component{
     }
 		return (
 			<div className="index-footer">
-				// <button className="btn btn-primary btn-large" onClick={this.postDownload.bind(this)}>我是底部下载按钮</button>
-				<button onClick={this.postDownload.bind(this)}>我是底部下载按钮</button>
-				<input onChange={this.upload.bind(this)} type="file" multiple/>
+				<button className="btn btn-primary btn-large" onClick={this.postDownload.bind(this)}>下载所有图标</button>
 			</div>
 		)
 	}
@@ -73,7 +71,6 @@ class Content extends Component{
 		return (
 			<div className="index-content">
 				<div className="icons-block">{arr}</div>
-				// {arr}
 				<Footer/>
 			</div>
 

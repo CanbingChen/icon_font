@@ -31,16 +31,17 @@ class Upload extends Component{
 		for(var i=0,len=files.length;i<len;i++){
 			fileObj.append(i,files[i]);
 			var reader = new FileReader();
-
       reader.readAsDataURL(files[i]);
       reader.onload = function(e) {
           that.setState({icons : that.state.icons.concat([this.result])});
       }
-			// var formData = new FormData();
-			// formData.append('files',files[0]);
-			// Tool.Fetch('/api/upload/','POST',formData).then();
 		}
-		Tool.Fetch('/api/upload/','POST',fileObj).then();
+		Tool.Fetch('/api/upload/','POST',fileObj).then(function(response){
+			console.log(response);
+			if(response.code === 10000){
+				window.open('/api/download_all/');
+			}
+		});
 	}
 	render()
 	{

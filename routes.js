@@ -46,7 +46,7 @@ router.post('/api/upload/',function*(){
         });
     }
     var sheel = spawn('fontcustom', ['compile','./src/uploads']);
-    free.on('exit', function (code, signal) {
+    sheel.on('exit', function (code, signal) {
         console.log('文件已生成：' + code);
         _this.body = {
             code : 10000,

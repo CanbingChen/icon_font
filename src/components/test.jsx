@@ -13,6 +13,7 @@ class Upload extends Component{
 	constructor(props,context){
 		super(props,context);
 		this.state = {icons : []};
+		this.postDownload = this.postDownload.bind(this)
 	}
 	componentWillMount(){
 
@@ -20,8 +21,10 @@ class Upload extends Component{
 	componentDidMount() {
 
 	}
+	postDownload(){
+		window.open('/api/download/');
+	}
 	uploadIcons(event){
-
 		var that = this;
 		let target = event.target
 		let files = target.files;
@@ -37,9 +40,10 @@ class Upload extends Component{
       }
 		}
 		Tool.Fetch('/api/upload/','POST',fileObj).then(function(response){
-			console.log(response);
 			if(response.code === 10000){
-				window.open('/api/download_all/');
+				that.setState({
+					uploadSuccess : true
+				});
 			}
 		});
 	}
@@ -68,6 +72,7 @@ class Upload extends Component{
 					<span className="select-button"><i className="icon-search"></i>选择图标</span>
 					<input type="file" multiple onChange={this.uploadIcons.bind(this)}/>
 					</label>
+					{this.state.uploadSuccess&&<button className="btn btn-primary btn-large" onClick={this.postDownload.bind(this)}>下载文件</button>}
 					</h2>
 					<div>
 					</div>

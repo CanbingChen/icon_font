@@ -9,7 +9,11 @@ import Tool from '../unit/Tool';
 class Footer extends Component{
 	constructor(props){
 		super(props);
-		this.state = {files : []};
+		this.state = {
+			files : [],
+			uploadSuccess : false
+		};
+		this.chooseFinish = this.chooseFinish.bind(this)
 	}
 	componentWillMount(){
 
@@ -21,22 +25,28 @@ class Footer extends Component{
 		// });
 	}
 	upload(event){
+		var that = this;
 		var files = event.target.files;
 		var file = new FormData();
 		for(var i = 0,len = files.length;i < len;i++){
 			file.append(i,files[i]);
 		}
-		Tool.Fetch('/api/upload/','POST',file).then();
+		Tool.Fetch('/api/upload/','POST',file).then(function(response){
+
+		});
+	}
+	chooseFinish(){
+		Tool.Fetch('/api/choose_finish/','GET','').then(function(response){
+
+		});
 	}
 	componentDidMount() {
 
 	}
 	render(){
-		var options={
-        baseUrl:'/api/upload/',
-    }
 		return (
 			<div className="index-footer">
+				<button className="btn btn-primary btn-large" onClick={this.chooseFinish}>选择图标结束</button>
 				<button className="btn btn-primary btn-large" onClick={this.postDownload.bind(this)}>下载所有图标</button>
 			</div>
 		)
@@ -45,28 +55,55 @@ class Footer extends Component{
 class Content extends Component{
 	constructor(props){
 		super(props);
-		this.state = {files : []};
+		// this.chooseIcon = this.chooseIcon.bind(this);
+		this.state = {
+			files : []
+		};
 	}
 	componentWillMount(){
 		var that = this;
-
 		Tool.Fetch('/api/send_emil/','POST','').then(function(response){
-			var state = that.state;
-			state.files = response.data.files;
-			that.setState(state);
+			// var state = that.state;
+			var files = response.data.files.map(function(name){
+				return {
+					name : name,
+					choose : false
+				}
+			});
+			that.setState({
+				files : files
+			});
 		});
+	}
+	chooseIcon(icon,index){
+		var files = this.state.files;
+		files[index].choose = !files[index].choose;
+		this.setState({
+			files :files
+		})
+		Tool.Fetch('/api/choose_icon/','GET',{name : icon.name});
 	}
 	componentDidMount() {
 
 	}
 	render(){
 		var arr = [];
-		this.state.files.forEach(function(icon){
-			arr.push(
-				<div className="svg-item">
-					<img src={require('../svgs/'+icon)}/>
-					<p>{icon}</p>
-				</div>);
+		var that = this;
+		this.state.files.forEach(function(icon,index){
+			if(icon.choose){
+				arr.push(
+					<div key={index} className="svg-item active" onClick={that.chooseIcon.bind(that,icon,index)}>
+						<img src={require('../svgs/'+icon.name)}/>
+						<p>{icon.name}</p>
+					</div>);
+			}else{
+				arr.push(
+					<div className="svg-item"  key={index} onClick={that.chooseIcon.bind(that,icon,index)}>
+						<img src={require('../svgs/'+icon.name)}/>
+						<p>{icon.name}</p>
+					</div>);
+			}
+
 		});
 		return (
 			<div className="index-content">
